@@ -102,24 +102,21 @@ treenodeptr remove_menor(treenodeptr &atual)
 {
     treenodeptr aux = atual; // Auxiliar para o nó a ser removido
 
-    if (aux->esq == NULL) // Encontrou o menor elemento da subárvore
-    {
+    if (aux->esq == NULL){ // Encontrou o menor elemento da subárvore
         atual = atual->dir; // Salva os filhos da direita
         return aux; // Retorna a referência para esse nó
     }
 
-    // continua a busca na subárvore da esquerda
+    // Continua a busca na subárvore da esquerda
     return remove_menor(atual->esq); // Chama recursivamenet a função remove_menor para o filho da esquerda
 }
 
 // Remove um pokemon da árvore pela sua pokebola
-int remove(treenodeptr &atual, string pkbola, int arvore)
-{
+int remove(treenodeptr &atual, string pkbola, int arvore){
     treenodeptr aux; // Auxiliar para o nó a ser removido
     int removed = 0; // Variável para verificar se o Pokemon foi removido
 
-    while (atual != NULL && atual->pokebola == pkbola)
-    {
+    while (atual != NULL && atual->pokebola == pkbola){
         // Verifica o tipo do Pokemon e decrementa o contador
         if(arvore == 0){
             if(atual->tipo == 0)
@@ -140,9 +137,7 @@ int remove(treenodeptr &atual, string pkbola, int arvore)
         // Verifica se o Pokemon tem filhos e atribui o filho da esquerda para o nó atual
         else if (atual->dir == NULL){
             atual = aux->esq;
-        }
-
-        else{
+        }else{
             aux = remove_menor(atual->dir); // Chama a função auxiliar para remover o menor elemento da subárvore da direita
             atual->pokebola = aux->pokebola; // Atribui a pokebola do Pokemon removido para o Pokemon atual
         }
@@ -152,8 +147,9 @@ int remove(treenodeptr &atual, string pkbola, int arvore)
     }
 
     // Verifica se o Pokemon foi removido e retornaa variável removed
-    if (atual == NULL)
+    if (atual == NULL){
         return removed;
+    }
 
     removed += remove(atual->dir, pkbola, arvore); // Chama recursivamenet a função remove para o filho da direita
     removed += remove(atual->esq, pkbola, arvore); // Chama recursivamenet a função remove para o filho da esquerda
